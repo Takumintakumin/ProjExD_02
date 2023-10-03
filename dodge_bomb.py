@@ -50,6 +50,10 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+        
+        if kk_rct.colliderect(bd_rct):
+            print("ゲームオーバー")
+            return
 
         screen.blit(bg_img, [0, 0])
 
@@ -61,11 +65,18 @@ def main():
                 sum_mv[0] += mv[0] #　縦方向の合計移動量
                 sum_mv[1] += mv[1] #　横方向の合計移動量
         kk_rct.move_ip(sum_mv[0], sum_mv[1])
+        if check_bound(kk_rct) != (True,True):
+              kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
         screen.blit(kk_img, kk_rct)
 
         """爆弾"""
         bd_rct.move_ip(vx, vy)
+        yoko, tate = check_bound(bd_rct)
+        if not yoko: # 横方向にはみ出たら
+            vx *= -1
+        if not tate: # 縦方向にはみ出たら
+            vy *= -1
         screen.blit(bd_img, bd_rct)
         pg.display.update()
         tmr += 1
