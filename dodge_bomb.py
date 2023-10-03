@@ -60,13 +60,6 @@ def main():
     x, y = random.randint(0, WIDTH), random.randint(0, HEIGHT)
     bd_rct.center = x, y # rectにランダムな座標を設定する
     vx,vy = +5, +5
-    """
-    加速の途中
-    avx, avy = vx,vy
-    accs = [a for a in range(1, 11)]
-    avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]
-    bd_img = bd_rct[min(tmr//500, 9)]
-    """
 
 
     while True:
@@ -105,6 +98,15 @@ def main():
             vx *= -1
         if not tate: # 縦方向にはみ出たら
             vy *= -1
+        """
+        加速の途中
+        avx, avy = vx,vy
+        accs = [a for a in range(1, 11)]
+        avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]
+        bd_img = bd_rct[min(tmr//500, 9)]
+        """    
+
+        
         screen.blit(bd_img, bd_rct)
         pg.display.update()
         tmr += 1
