@@ -11,10 +11,24 @@ delta = {
     pg.K_RIGHT: (+5, 0)
 }
 
+def check_bound(obj_rct):
+    """
+    引数:こうかとんRectか、爆弾Rect
+    戻り値：横方向・縦方向の心理値タプル(画面内:True, 画面外:False)
+    Rectオブジェクトのleft, right, top, bottomの値から画面内・外を判断する
+    """
+    yoko, tate = True, True
+    if obj_rct.left < 0 or WIDTH < obj_rct.right:
+        yoko = False
+    if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
+        tate = False
+    return yoko, tate
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("fig/pg_bg.jpg")
+
     """こうかとん"""
     kk_img = pg.image.load("fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
