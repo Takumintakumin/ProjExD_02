@@ -11,8 +11,6 @@ delta = {
     pg.K_RIGHT: (+5, 0)
 }
 
-
-
 def check_bound(obj_rct):
     """
     引数:こうかとんRectか、爆弾Rect
@@ -35,7 +33,7 @@ def main():
     kk_img = pg.image.load("fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk2_img = pg.transform.flip(kk_img, True, False)
-    kk_main_img = {pg.transform.rotozoom(kk2_img, 90, 1.0):[0,-5],#ue
+    kk_main_img = {pg.transform.rotozoom(kk2_img, 90, 1.0):[0,-5],
                    pg.transform.rotozoom(kk2_img, 45, 1.0):[5,-5],
                    pg.transform.rotozoom(kk2_img, 0, 1.0):[5,0],
                    pg.transform.rotozoom(kk2_img, -45, 1.0):[5,5],
@@ -43,14 +41,14 @@ def main():
                    pg.transform.rotozoom(kk_img, 0, 1.0):[-5,0],
                    pg.transform.rotozoom(kk_img, -45, 1.0):[-5,-5],
                    pg.transform.rotozoom(kk_img, 45, 1.0):[-5,5]
-              
               }
+    """
+    こうかとんの向きのlist ↑ 
+    """
 
-    kk_t = kk_img
+    kk_t = kk_img  #　こうかとんの位置を保持しておくためのkk_t
     kk_rct = kk_img.get_rect()
     kk_rct.center = [900,400]
-
- 
 
     clock = pg.time.Clock()
     tmr = 0
@@ -62,6 +60,14 @@ def main():
     x, y = random.randint(0, WIDTH), random.randint(0, HEIGHT)
     bd_rct.center = x, y # rectにランダムな座標を設定する
     vx,vy = +5, +5
+    """
+    加速の途中
+    avx, avy = vx,vy
+    accs = [a for a in range(1, 11)]
+    avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]
+    bd_img = bd_rct[min(tmr//500, 9)]
+    """
+
 
     while True:
         for event in pg.event.get():
@@ -88,7 +94,7 @@ def main():
         for kk in kk_main_img.items():
             if sum_mv == kk[1]:
                 screen.blit(kk[0], kk_rct)
-                kk_t= kk[0]
+                kk_t= kk[0] # こうかとんの向き保持
         if sum_mv == [0,0]:
             screen.blit(kk_t, kk_rct)
 
