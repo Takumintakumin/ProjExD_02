@@ -11,6 +11,8 @@ delta = {
     pg.K_RIGHT: (+5, 0)
 }
 
+
+
 def check_bound(obj_rct):
     """
     引数:こうかとんRectか、爆弾Rect
@@ -32,8 +34,23 @@ def main():
     """こうかとん"""
     kk_img = pg.image.load("fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk2_img = pg.transform.flip(kk_img, True, False)
+    kk_main_img = {pg.transform.rotozoom(kk2_img, 90, 1.0):[0,-5],#ue
+                   pg.transform.rotozoom(kk2_img, 45, 1.0):[5,-5],
+                   pg.transform.rotozoom(kk2_img, 0, 1.0):[5,0],
+                   pg.transform.rotozoom(kk2_img, -45, 1.0):[5,5],
+                   pg.transform.rotozoom(kk2_img, -90, 1.0):[0,5],
+                   pg.transform.rotozoom(kk_img, 0, 1.0):[-5,0],
+                   pg.transform.rotozoom(kk_img, -45, 1.0):[-5,-5],
+                   pg.transform.rotozoom(kk_img, 45, 1.0):[-5,5]
+              
+              }
+
+    kk_t = kk_img
     kk_rct = kk_img.get_rect()
     kk_rct.center = [900,400]
+
+ 
 
     clock = pg.time.Clock()
     tmr = 0
@@ -68,7 +85,12 @@ def main():
         if check_bound(kk_rct) != (True,True):
               kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
-        screen.blit(kk_img, kk_rct)
+        for kk in kk_main_img.items():
+            if sum_mv == kk[1]:
+                screen.blit(kk[0], kk_rct)
+                kk_t= kk[0]
+        if sum_mv == [0,0]:
+            screen.blit(kk_t, kk_rct)
 
         """爆弾"""
         bd_rct.move_ip(vx, vy)
